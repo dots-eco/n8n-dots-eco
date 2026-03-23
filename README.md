@@ -36,7 +36,6 @@ The node routes tokens automatically by operation:
 
 - read token for read endpoints
 - write token for write endpoints
-- no auth header for supported languages and supported currencies
 
 The package does not expose a sandbox or production toggle. Environment stays implicit in the base URL, app token, and auth tokens you provide.
 The credential "test connection" check only verifies reachability of the base URL through a documented public endpoint. Read and write token validity is exercised by the first authenticated node operation you run.
@@ -101,12 +100,6 @@ pnpm test
 
 This package intentionally keeps only lightweight unit coverage in `tests/unit`.
 
-The reusable validation harness lives outside the package folder so the integration package stays lean. See the separate `apps/n8n-tests` project in the Dots.eco monorepo for:
-
-- direct Dots.eco API contract checks against local Drupal
-- local tarball install checks for n8n
-- optional browser smoke checks
-
 ## Release and Submission
 
 - The package has no runtime dependencies, which is required for n8n verification
@@ -116,8 +109,6 @@ The reusable validation harness lives outside the package folder so the integrat
 ## References
 
 - Dots.eco API docs: <https://docs.impact.dots.eco>
-- n8n verification guidelines: <https://docs.n8n.io/integrations/creating-nodes/build/reference/verification-guidelines/>
-- n8n node docs: <https://docs.n8n.io/integrations/creating-nodes/>
 
 ## License
 

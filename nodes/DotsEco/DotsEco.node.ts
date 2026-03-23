@@ -44,7 +44,7 @@ function getResolvedParameters(
 
 export class DotsEco implements INodeType {
   description: INodeTypeDescription = {
-    displayName: "Dots.eco",
+    displayName: "dots.eco",
     name: "dotsEco",
     icon: {
       light: "file:Dots_eco_logo.svg",
@@ -53,9 +53,10 @@ export class DotsEco implements INodeType {
     group: ["transform"],
     version: 1,
     subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-    description: "Work with the documented public Dots.eco API",
+    description:
+      "Work with dots.eco API. Rewarding you for casually saving the planet.",
     defaults: {
-      name: "Dots.eco",
+      name: "dots.eco",
     },
     inputs: ["main"],
     outputs: ["main"],
