@@ -24,7 +24,7 @@
     "url": "https://github.com/dots-eco/n8n-dots-eco/issues"
   },
   "engines": {
-    "node": ">=20.15"
+    "node": ">=20.19"
   },
   "packageManager": "pnpm@10.32.1",
   "scripts": {
@@ -32,8 +32,8 @@
     "build": "npm run clean && tsc -p tsconfig.json && node scripts/copy-assets.mjs",
     "build:watch": "tsc --watch -p tsconfig.json",
     "dev": "npm run build:watch",
-    "lint": "n8n-node lint && tsc --noEmit -p tsconfig.json && prettier --check .",
-    "lint:fix": "n8n-node lint && prettier --write .",
+    "lint": "eslint . && tsc --noEmit -p tsconfig.json && prettier --check .",
+    "lint:fix": "eslint . --fix && prettier --write .",
     "test": "npm run build && node --test tests/unit/*.test.js",
     "prepack": "npm run build"
   },
