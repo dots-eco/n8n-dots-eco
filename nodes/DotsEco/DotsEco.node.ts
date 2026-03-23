@@ -29,10 +29,14 @@ function getResolvedParameters(
   const parameters: IDataObject = {};
 
   for (const name of parameterNames) {
-    parameters[name] = context.getNodeParameter(
-      name,
-      itemIndex,
-    ) as IDataObject[string];
+    try {
+      parameters[name] = context.getNodeParameter(
+        name,
+        itemIndex,
+      ) as IDataObject[string];
+    } catch {
+      parameters[name] = undefined;
+    }
   }
 
   return parameters;
@@ -42,7 +46,10 @@ export class DotsEco implements INodeType {
   description: INodeTypeDescription = {
     displayName: "Dots.eco",
     name: "dotsEco",
-    icon: "file:Dots_eco_logo.svg",
+    icon: {
+      light: "file:Dots_eco_logo.svg",
+      dark: "file:Dots_eco_logo.dark.svg",
+    },
     group: ["transform"],
     version: 1,
     subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',

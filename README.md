@@ -1,4 +1,4 @@
-![Dots.eco logo](https://raw.githubusercontent.com/dots-eco/n8n-dots-eco/main/nodes/DotsEco/Dots_eco_logo.png)
+![Dots.eco logo](https://raw.githubusercontent.com/dots-eco/n8n-dots-eco/main/nodes/DotsEco/Dots_eco_logo.svg)
 
 # Dots.eco n8n Nodes
 

@@ -7,4 +7,5 @@ coverage
 tmp
 npm-debug.log*
 yarn.lock
-.vscode/launch.json
+.vscode
+.idea

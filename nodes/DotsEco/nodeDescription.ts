@@ -418,6 +418,7 @@ const fields: INodeProperties[] = [
     placeholder: "order-12345",
     description:
       "External identifier used to deduplicate or retrieve certificates",
+    hint: "Must be unique per app when creating a certificate. Reusing the same value returns a 422 from the Dots.eco API.",
   },
   {
     displayName: "Impact Quantity",

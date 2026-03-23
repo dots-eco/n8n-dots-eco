@@ -12,12 +12,51 @@ const {
 const {
   normalizeOperationParameters,
 } = require("../../dist/nodes/DotsEco/parameterNormalization.js");
+const { DotsEco } = require("../../dist/nodes/DotsEco/DotsEco.node.js");
 const {
   operationDefinitions,
 } = require("../../dist/nodes/DotsEco/operations.js");
 const {
   dotsEcoLoadOptionsRequest,
 } = require("../../dist/nodes/DotsEco/transport.js");
+
+async function executeCertificateCreate(parameterValues) {
+  const node = new DotsEco();
+  let capturedRequest;
+
+  const result = await node.execute.call({
+    getInputData() {
+      return [{ json: {} }];
+    },
+    async getCredentials() {
+      return {
+        baseUrl: "https://impact.dots.eco/api/v1",
+        writeAuthToken: "write-token",
+      };
+    },
+    getNodeParameter(name) {
+      if (name in parameterValues) {
+        return parameterValues[name];
+      }
+
+      throw new Error(`Unknown parameter: ${name}`);
+    },
+    continueOnFail() {
+      return false;
+    },
+    getNode() {
+      return {};
+    },
+    helpers: {
+      async httpRequest(request) {
+        capturedRequest = request;
+        return { ok: true };
+      },
+    },
+  });
+
+  return { capturedRequest, result };
+}
 
 test("supported language options map canonical values and sort predictably", () => {
   const options = mapSupportedLanguageOptions({
@@ -188,6 +227,77 @@ test("lookup-mode allocation normalization clears stale manual values when no lo
   );
 
   assert.equal(normalized.allocationId, undefined);
+});
+
+test("certificate create sends the selected allocation id in lookup mode even when the manual field is hidden", async () => {
+  const { capturedRequest, result } = await executeCertificateCreate({
+    resource: "certificates",
+    operation: "create",
+    appToken: "app-token",
+    externalUniqueId: "",
+    impactQty: 2,
+    remoteUserId: "user-123",
+    nameOnCertificate: "",
+    remoteUserEmail: "",
+    certificateDesign: "",
+    sendCertificateByEmail: "",
+    certificateInfo: "",
+    createAsyncImage: "",
+    langcode: "",
+    currency: "",
+    allocationEntryMode: "lookup",
+    allocationLookupId: "17",
+  });
+
+  assert.equal(capturedRequest.body.allocation_id, 17);
+  assert.equal("external_unique_id" in capturedRequest.body, false);
+  assert.deepEqual(result, [[{ json: { ok: true }, pairedItem: { item: 0 } }]]);
+});
+
+test("certificate create sends the manually entered allocation id", async () => {
+  const { capturedRequest } = await executeCertificateCreate({
+    resource: "certificates",
+    operation: "create",
+    appToken: "app-token",
+    externalUniqueId: "",
+    impactQty: 2,
+    allocationId: 33,
+    remoteUserId: "user-123",
+    nameOnCertificate: "",
+    remoteUserEmail: "",
+    certificateDesign: "",
+    sendCertificateByEmail: "",
+    certificateInfo: "",
+    createAsyncImage: "",
+    langcode: "",
+    currency: "",
+    allocationEntryMode: "manual",
+  });
+
+  assert.equal(capturedRequest.body.allocation_id, 33);
+});
+
+test("certificate create forwards a non-empty external unique id", async () => {
+  const { capturedRequest } = await executeCertificateCreate({
+    resource: "certificates",
+    operation: "create",
+    appToken: "app-token",
+    externalUniqueId: "order-12345",
+    impactQty: 2,
+    allocationId: 33,
+    remoteUserId: "user-123",
+    nameOnCertificate: "",
+    remoteUserEmail: "",
+    certificateDesign: "",
+    sendCertificateByEmail: "",
+    certificateInfo: "",
+    createAsyncImage: "",
+    langcode: "",
+    currency: "",
+    allocationEntryMode: "manual",
+  });
+
+  assert.equal(capturedRequest.body.external_unique_id, "order-12345");
 });
 
 test("manual eco club allocation limits remain unchanged", () => {

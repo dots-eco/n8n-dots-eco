@@ -10,7 +10,10 @@ export class DotsEcoApi implements ICredentialType {
 
   displayName = "Dots.eco API";
 
-  icon: Icon = "file:../nodes/DotsEco/Dots_eco_logo.svg";
+  icon: Icon = {
+    light: "file:../nodes/DotsEco/Dots_eco_logo.svg",
+    dark: "file:../nodes/DotsEco/Dots_eco_logo.dark.svg",
+  };
 
   documentationUrl = "https://github.com/dots-eco/n8n-dots-eco";
 
