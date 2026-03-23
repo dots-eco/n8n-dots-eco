@@ -1,7 +1,7 @@
 {
   "name": "@dotseco/n8n-nodes-dots-eco",
   "version": "0.5.1",
-  "description": "First-party n8n community node for the documented Dots.eco public API",
+  "description": "First-party n8n community node for the documented dots.eco public API",
   "license": "MIT",
   "homepage": "https://docs.impact.dots.eco",
   "keywords": [
@@ -13,7 +13,7 @@
     "sustainability"
   ],
   "author": {
-    "name": "Dots.eco",
+    "name": "dots.eco",
     "email": "engineering@dots.eco"
   },
   "repository": {
