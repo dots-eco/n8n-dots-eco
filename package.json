@@ -1,12 +1,17 @@
 {
   "name": "@dotseco/n8n-nodes-dots-eco",
-  "version": "0.1.2",
-  "description": "Dots.eco API Integration for N8N",
-  "keywords": [
-    "n8n-community-node-package"
-  ],
+  "version": "0.5.1",
+  "description": "First-party n8n community node for the documented Dots.eco public API",
   "license": "MIT",
-  "homepage": "https://www.dots.eco",
+  "homepage": "https://docs.impact.dots.eco",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "dots-eco",
+    "impact",
+    "certificates",
+    "sustainability"
+  ],
   "author": {
     "name": "Dots.eco",
     "email": "engineering@dots.eco"
@@ -15,20 +20,31 @@
     "type": "git",
     "url": "https://github.com/dots-eco/n8n-dots-eco.git"
   },
-  "main": "index.js",
+  "bugs": {
+    "url": "https://github.com/dots-eco/n8n-dots-eco/issues"
+  },
+  "engines": {
+    "node": ">=20.15"
+  },
+  "packageManager": "pnpm@10.32.1",
   "scripts": {
-    "build": "tsc && gulp build:icons",
-    "dev": "tsc --watch",
-    "format": "prettier nodes credentials --write",
-    "lint": "eslint nodes credentials package.json",
-    "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.json && node scripts/copy-assets.mjs",
+    "build:watch": "tsc --watch -p tsconfig.json",
+    "dev": "npm run build:watch",
+    "lint": "n8n-node lint && tsc --noEmit -p tsconfig.json && prettier --check .",
+    "lint:fix": "n8n-node lint && prettier --write .",
+    "test": "npm run build && node --test tests/unit/*.test.js",
+    "prepack": "npm run build"
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE.md",
+    "README.md"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
+    "strict": true,
     "credentials": [
       "dist/credentials/DotsEcoApi.credentials.js"
     ],
@@ -37,15 +53,11 @@
     ]
   },
   "devDependencies": {
-    "@types/express": "^4.17.17",
-    "@types/request-promise-native": "~1.0.18",
-    "@typescript-eslint/parser": "~6.7",
-    "eslint-plugin-n8n-nodes-base": "^1.16.0",
-    "graceful-fs": "4.2.11",
-    "gulp": "^4.0.2",
-    "n8n-core": "^1.5.0",
-    "n8n-workflow": "^1.6.0",
-    "prettier": "^3.0.3",
-    "typescript": "~4.8.4"
+    "@n8n/node-cli": "0.23.0",
+    "@types/node": "^22.13.14",
+    "eslint": "9.29.0",
+    "n8n-workflow": "^2.13.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.2"
   }
 }

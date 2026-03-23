@@ -1,20 +1,18 @@
 {
-    "node": "n8n-nodes-base.DotsEco",
-    "nodeVersion": "1.0",
-    "codexVersion": "1.0",
-    "categories": [
-        "Miscellaneous"
+  "node": "n8n-nodes-base.DotsEco",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Productivity", "Communication"],
+  "resources": {
+    "credentialDocumentation": [
+      {
+        "url": "https://github.com/dots-eco/n8n-dots-eco#credentials"
+      }
     ],
-    "resources": {
-        "credentialDocumentation": [
-            {
-                "url": ""
-            }
-        ],
-        "primaryDocumentation": [
-            {
-                "url": ""
-            }
-        ]
-    }
+    "primaryDocumentation": [
+      {
+        "url": "https://github.com/dots-eco/n8n-dots-eco"
+      }
+    ]
+  }
 }
